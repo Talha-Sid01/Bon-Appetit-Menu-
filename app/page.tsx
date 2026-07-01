@@ -87,27 +87,33 @@ export default function Home() {
 
             {/* Right: Contact Call, Instagram, and Whatsapp Buttons */}
             <div className="flex items-center gap-2">
-              <a
+              <motion.a
                 href={`tel:${phoneNo}`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.96 }}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold tracking-wider text-cream-bg bg-forest-green hover:bg-forest-green/95 hover:shadow-[0_0_10px_rgba(27,67,50,0.4)] transition-all duration-300 border border-gold/10"
               >
                 <Phone className="w-3.5 h-3.5 fill-current text-cream-bg" />
                 <span className="hidden md:inline">Call</span>
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href="https://www.instagram.com/bon_appetit.cafe?igsh=MWFxZXVkeHVwNHF2"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold tracking-wider text-white bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] transition-all duration-300 shadow-[0_0_10px_rgba(238,42,123,0.5)] hover:shadow-[0_0_15px_rgba(238,42,123,0.85)] hover:scale-105"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.96 }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold tracking-wider text-white bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] transition-all duration-300 shadow-[0_0_10px_rgba(238,42,123,0.5)] hover:shadow-[0_0_15px_rgba(238,42,123,0.85)]"
               >
                 <Instagram className="w-3.5 h-3.5 text-white" />
                 <span className="hidden md:inline">Instagram</span>
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href={`https://wa.me/${phoneNo.replace("+", "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold tracking-wider text-[#128C7E] bg-white transition-all duration-300 shadow-[0_0_10px_rgba(37,211,102,0.3)] hover:shadow-[0_0_15px_rgba(37,211,102,0.6)] hover:scale-105 border border-emerald-100"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.96 }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold tracking-wider text-[#128C7E] bg-white transition-all duration-300 shadow-[0_0_10px_rgba(37,211,102,0.3)] hover:shadow-[0_0_15px_rgba(37,211,102,0.6)] border border-emerald-100"
               >
                 <div className="relative w-4.5 h-4.5 shrink-0">
                   <Image
@@ -119,7 +125,7 @@ export default function Home() {
                   />
                 </div>
                 <span className="hidden md:inline">WhatsApp</span>
-              </a>
+              </motion.a>
             </div>
           </div>
         </header>
@@ -212,7 +218,9 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="mt-8"
             >
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.96 }}
                 onClick={() => {
                   const el = document.getElementById("savouries");
                   if (el) {
@@ -221,10 +229,11 @@ export default function Home() {
                     window.scrollTo({ top: yPosition, behavior: "smooth" });
                   }
                 }}
-                className="px-8 py-3.5 rounded-full text-sm font-bold tracking-widest uppercase text-cream-bg bg-forest-green border border-gold/30 shadow-md hover:bg-forest-green/90 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+                className="px-8 py-3.5 rounded-full text-sm font-bold tracking-widest uppercase text-cream-bg bg-forest-green border border-gold/30 shadow-md hover:bg-forest-green/90 transition-all duration-300 cursor-pointer animate-bounce"
+                style={{ animationDuration: "3s" }}
               >
                 View Full Menu
-              </button>
+              </motion.button>
             </motion.div>
 
             {/* Quick Contact & Info Footer row */}
@@ -263,12 +272,10 @@ export default function Home() {
         <StickyCategoryNav categoryIds={categoryIds} />
 
         {/* 5. Menu Sections */}
-        <main className="bg-white">
-          <div className="max-w-7xl mx-auto">
-            {menuCategories.map((category) => (
-              <CategorySection key={category.id} category={category} />
-            ))}
-          </div>
+        <main className="bg-[#0F1912] overflow-hidden">
+          {menuCategories.map((category, index) => (
+            <CategorySection key={category.id} category={category} index={index} />
+          ))}
         </main>
 
         {/* 6. Why Bon Appétit Trust Badges Strip (Mid-page) */}
@@ -335,22 +342,26 @@ export default function Home() {
                 </div>
 
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                  <a
+                  <motion.a
                     href={directionsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-forest-green text-cream-bg hover:bg-forest-green/95 border border-gold/25 font-bold text-sm tracking-wider uppercase transition-colors duration-300"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.96 }}
+                    className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-forest-green text-cream-bg hover:bg-forest-green/95 border border-gold/25 font-bold text-sm tracking-wider uppercase transition-all duration-300"
                   >
                     <Compass className="w-4 h-4 shrink-0" />
                     Get Directions
-                  </a>
-                  <a
+                  </motion.a>
+                  <motion.a
                     href={`tel:${phoneNo}`}
-                    className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border-2 border-forest-green text-forest-green hover:bg-forest-green/5 font-bold text-sm tracking-wider uppercase transition-colors duration-300"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.96 }}
+                    className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border-2 border-forest-green text-forest-green hover:bg-forest-green/5 font-bold text-sm tracking-wider uppercase transition-all duration-300"
                   >
                     <Phone className="w-4 h-4 shrink-0 fill-current" />
                     Call Café
-                  </a>
+                  </motion.a>
                 </div>
               </div>
             </div>

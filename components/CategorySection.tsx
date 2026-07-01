@@ -1,6 +1,6 @@
 "use client";
 
-import { MenuCategory, MenuItem, CollectionItem } from "@/data/menu";
+import { MenuCategory, MenuItem } from "@/data/menu";
 import MenuItemCard from "./MenuItemCard";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -8,11 +8,12 @@ import { Sparkles } from "lucide-react";
 
 interface CategorySectionProps {
   category: MenuCategory;
+  index: number;
 }
 
 // Hand-drawn vector outlined SVG icons for categories
-const CategoryIcon = ({ name }: { name: string }) => {
-  const svgClass = "w-8 h-8 text-gold stroke-[1.5] fill-none";
+const CategoryIcon = ({ name, className = "" }: { name: string; className?: string }) => {
+  const svgClass = `w-8 h-8 stroke-[1.5] fill-none ${className || "text-gold"}`;
 
   switch (name) {
     case "sandwich":
@@ -130,7 +131,7 @@ const CategoryIcon = ({ name }: { name: string }) => {
   }
 };
 
-export default function CategorySection({ category }: CategorySectionProps) {
+export default function CategorySection({ category, index }: CategorySectionProps) {
   const [activeFormat, setActiveFormat] = useState<"waffle" | "pancake" | "crepe">("waffle");
 
   const containerVariants = {
@@ -138,7 +139,7 @@ export default function CategorySection({ category }: CategorySectionProps) {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.08,
+        staggerChildren: 0.05, // 50ms stagger cascade
       },
     },
   };
@@ -147,6 +148,10 @@ export default function CategorySection({ category }: CategorySectionProps) {
     hidden: { opacity: 0, y: 15 },
     show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 100, damping: 15 } },
   };
+
+  // Alternate backgrounds per section index
+  const isEven = index % 2 === 0;
+  const bgClass = isEven ? "bg-[#0F1912]" : "bg-[#141F17]";
 
   // Special renderer for Waffles, Pancakes, Crepes
   const renderWafflesPancakesCrepes = () => {
@@ -159,15 +164,15 @@ export default function CategorySection({ category }: CategorySectionProps) {
       <div className="space-y-8">
         {/* Toggle Selector */}
         <div className="flex justify-center mb-6">
-          <div className="bg-forest-green/5 p-1 rounded-full border border-gold/15 flex gap-1 shadow-inner">
+          <div className="bg-[#1B2A20] p-1.5 rounded-full border border-gold/20 flex gap-1 shadow-inner z-10 relative">
             {(["waffle", "pancake", "crepe"] as const).map((format) => (
               <button
                 key={format}
                 onClick={() => setActiveFormat(format)}
-                className={`px-6 py-2 rounded-full text-xs md:text-sm font-bold tracking-widest uppercase transition-all duration-300 ${
+                className={`px-5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 select-none cursor-pointer ${
                   activeFormat === format
-                    ? "bg-forest-green text-cream-bg shadow"
-                    : "text-forest-green hover:bg-forest-green/10"
+                    ? "bg-forest-green text-cream-bg shadow border border-[#D9B15C]/25"
+                    : "text-[#9BA89B] hover:text-[#F3EDDD] hover:bg-white/5"
                 }`}
               >
                 {format}s
@@ -184,7 +189,7 @@ export default function CategorySection({ category }: CategorySectionProps) {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {standardCollections.map((col, index) => {
+          {standardCollections.map((col) => {
             const price =
               activeFormat === "waffle"
                 ? col.wafflePrice
@@ -211,17 +216,17 @@ export default function CategorySection({ category }: CategorySectionProps) {
 
         {/* Signature Collection Row (Highlighted Tier) */}
         {signatureCollection && (
-          <div className="mt-8 border border-italian-red/20 bg-italian-red/5 p-6 md:p-8 rounded-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-italian-red text-white text-[10px] uppercase tracking-widest font-extrabold px-4 py-1 rounded-bl-xl shadow flex items-center">
-              <Sparkles className="w-3 h-3 mr-1 fill-current" />
+          <div className="mt-8 border border-[#D9B15C]/25 bg-red-950/20 p-6 md:p-8 rounded-2xl relative overflow-hidden shadow-lg">
+            <div className="absolute top-0 right-0 bg-[#C1272D] text-[#FAF6EE] text-[10px] uppercase tracking-widest font-extrabold px-4 py-1.5 rounded-bl-xl shadow flex items-center border-l border-b border-[#D9B15C]/35">
+              <Sparkles className="w-3 h-3 mr-1 fill-current text-[#D9B15C]" />
               Signature Tier
             </div>
             
             <div className="text-center md:text-left mb-6">
-              <h4 className="font-display text-xl font-extrabold text-forest-green tracking-wide">
+              <h4 className="font-display text-xl font-extrabold text-[#F3EDDD] tracking-wide">
                 {signatureCollection.name}
               </h4>
-              <p className="text-xs md:text-sm text-ink/70 mt-1">
+              <p className="text-xs md:text-sm text-[#9BA89B] mt-1">
                 The ultimate dessert experience — meticulously prepared with premium ingredients.
               </p>
             </div>
@@ -234,12 +239,12 @@ export default function CategorySection({ category }: CategorySectionProps) {
               ].map((sigItem) => (
                 <div
                   key={sigItem.name}
-                  className="bg-white rounded-xl p-4 shadow-sm border border-gold/10 flex items-center justify-between"
+                  className="bg-[#1B2A20] rounded-xl p-4 shadow-sm border border-gold/25 flex items-center justify-between hover:border-[#D9B15C]/60 transition-all duration-300"
                 >
-                  <span className="font-display text-sm font-bold text-forest-green">
+                  <span className="font-display text-sm font-bold text-[#F3EDDD]">
                     {sigItem.name}
                   </span>
-                  <span className="font-sans text-sm font-extrabold text-italian-red">
+                  <span className="font-sans text-sm font-extrabold text-[#D9B15C]">
                     ₹{sigItem.price}
                   </span>
                 </div>
@@ -252,23 +257,23 @@ export default function CategorySection({ category }: CategorySectionProps) {
   };
 
   return (
-    <section id={category.id} className="py-12 border-b border-gold/15 last:border-0 scroll-mt-28">
+    <section id={category.id} className={`py-16 scroll-mt-28 border-b border-gold/10 last:border-0 transition-colors duration-300 ${bgClass}`}>
       {/* Category Heading */}
       <div className="flex flex-col items-center mb-10 text-center px-4">
-        <div className="p-3 bg-white rounded-full border border-gold/20 shadow-md mb-3 flex items-center justify-center">
-          <CategoryIcon name={category.iconName} />
+        <div className="p-3 bg-[#1B2A20] rounded-full border border-gold/30 shadow-lg mb-3 flex items-center justify-center">
+          <CategoryIcon name={category.iconName} className="text-gold" />
         </div>
         
         <div className="flex items-center justify-center gap-3 w-full max-w-lg">
           <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-gold" />
-          <h3 className="font-display text-xl md:text-2xl font-black text-forest-green tracking-widest uppercase">
+          <h3 className="font-display text-xl md:text-2xl font-black text-[#F3EDDD] tracking-widest uppercase">
             {category.title}
           </h3>
           <div className="h-[1px] flex-grow bg-gradient-to-l from-transparent to-gold" />
         </div>
 
         {category.description && (
-          <p className="mt-2 text-xs md:text-sm font-semibold tracking-wider text-italian-red font-sans">
+          <p className="mt-2 text-xs md:text-sm font-bold tracking-wider text-red-400 font-sans">
             {category.description}
           </p>
         )}
@@ -286,7 +291,7 @@ export default function CategorySection({ category }: CategorySectionProps) {
             viewport={{ once: true, margin: "-100px" }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {category.items.map((item, index) => (
+            {category.items.map((item) => (
               <motion.div key={item.name} variants={itemVariants}>
                 <MenuItemCard item={item} />
               </motion.div>
@@ -296,13 +301,13 @@ export default function CategorySection({ category }: CategorySectionProps) {
 
         {/* Small inline note for specific sections */}
         {category.id === "protein-shakes" && (
-          <p className="mt-6 text-center text-xs text-ink/60 font-semibold italic">
+          <p className="mt-6 text-center text-xs text-[#9BA89B] font-semibold italic">
             *We only use milk.
           </p>
         )}
         
         {category.id === "performance-addons" && (
-          <p className="mt-8 text-center text-xs text-ink/50 font-sans tracking-wide">
+          <p className="mt-8 text-center text-xs text-[#9BA89B]/85 font-sans tracking-wide">
             Protein values are approximate and may vary slightly based on serving size and ingredient availability.
           </p>
         )}
