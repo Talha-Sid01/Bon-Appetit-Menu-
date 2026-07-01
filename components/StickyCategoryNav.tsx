@@ -15,7 +15,7 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
   const [showLeftFade, setShowLeftFade] = useState(false);
   const [showRightFade, setShowRightFade] = useState(true);
 
-  // Short labels mapping to keep tabs readable on small mobile screens
+  // Short labels mapping to keep tabs readable and highly compact on mobile screens
   const getShortLabel = (id: string) => {
     switch (id) {
       case "savouries":
@@ -29,9 +29,9 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
       case "toast":
         return "Toasts";
       case "sweet-salty-spicy":
-        return "Sweet & Salty";
+        return "Sweet/Salty";
       case "waffles-pancakes-crepes":
-        return "Waffles & Crepes";
+        return "Waffles";
       case "desserts":
         return "Desserts";
       case "addons":
@@ -41,7 +41,7 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
       case "protein-shakes":
         return "Protein Shakes";
       case "performance-addons":
-        return "Gym Add-Ons";
+        return "Gym Addons";
       default:
         return "Menu";
     }
@@ -164,8 +164,8 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
   };
 
   return (
-    <div className="sticky top-[73px] z-30 w-full bg-cream-bg/95 backdrop-blur-md border-b border-gold/15 py-3 shadow-sm select-none">
-      <div className="relative max-w-7xl mx-auto px-4">
+    <div className="sticky top-[73px] z-30 w-full bg-cream-bg/95 backdrop-blur-md border-b border-gold/15 py-1.5 md:py-3 shadow-sm select-none">
+      <div className="relative max-w-7xl mx-auto px-2 md:px-4">
         
         {/* Left Gradient Fade Affordance (desktop only) */}
         <div
@@ -174,10 +174,10 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
           }`}
         />
 
-        {/* Horizontal Scrollable Container on desktop, Wrap aligned grid on mobile */}
+        {/* Horizontal Scrollable Container on desktop, Compact Wrap aligned grid on mobile */}
         <div
           ref={navRef}
-          className="flex flex-wrap md:flex-nowrap items-center justify-center md:justify-start gap-2 overflow-x-visible md:overflow-x-auto md:overflow-y-hidden scroll-smooth no-scrollbar snap-x-proximity py-1"
+          className="flex flex-wrap md:flex-nowrap items-center justify-center md:justify-start gap-1 md:gap-2.5 overflow-x-visible md:overflow-x-auto md:overflow-y-hidden scroll-smooth no-scrollbar snap-x-proximity py-0.5"
           style={{ WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}
         >
           {categoryIds.map((id) => {
@@ -193,14 +193,14 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
                   isProtein && !isActive
                     ? {
                         boxShadow: [
-                          "0 0 6px rgba(16,185,129,0.3)",
-                          "0 0 14px rgba(16,185,129,0.65)",
-                          "0 0 6px rgba(16,185,129,0.3)"
+                          "0 0 4px rgba(193,39,45,0.25)",
+                          "0 0 12px rgba(193,39,45,0.6)",
+                          "0 0 4px rgba(193,39,45,0.25)"
                         ],
                         borderColor: [
-                          "rgba(16,185,129,0.3)",
-                          "rgba(16,185,129,0.8)",
-                          "rgba(16,185,129,0.3)"
+                          "rgba(193,39,45,0.25)",
+                          "rgba(193,39,45,0.7)",
+                          "rgba(193,39,45,0.25)"
                         ]
                       }
                     : {}
@@ -210,13 +210,13 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
                   duration: 2.5,
                   ease: "easeInOut" as const
                 }}
-                className={`relative snap-start shrink-0 px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-all duration-300 select-none cursor-pointer focus:outline-none flex items-center justify-center border overflow-hidden active:scale-95 ${
+                className={`relative snap-start shrink-0 px-2.5 py-1 md:px-4 md:py-1.5 rounded-full text-[8.5px] md:text-[10px] font-bold tracking-wider uppercase transition-all duration-300 select-none cursor-pointer focus:outline-none flex items-center justify-center border overflow-hidden active:scale-95 ${
                   isActive
                     ? isProtein
-                      ? "bg-forest-green text-cream-bg border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.7)]"
+                      ? "bg-forest-green text-cream-bg border-red-400 shadow-[0_0_15px_rgba(193,39,45,0.65)]"
                       : "bg-forest-green text-cream-bg border-forest-green shadow-[0_4px_12px_rgba(27,67,50,0.15)]"
                     : isProtein
-                    ? "bg-emerald-50/45 border-emerald-500/50 text-emerald-700"
+                    ? "bg-red-50/45 border-red-500/50 text-[#C1272D]"
                     : "bg-white border-gold/15 text-forest-green"
                 }`}
               >
@@ -225,7 +225,7 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
                     layoutId="activeNavTab"
                     className={`absolute inset-0 rounded-full ${
                       isProtein
-                        ? "bg-forest-green border border-emerald-400/50"
+                        ? "bg-forest-green border border-red-400/50"
                         : "bg-forest-green border border-forest-green"
                     }`}
                     transition={{ type: "spring", stiffness: 380, damping: 28 }}
@@ -236,7 +236,7 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
                     isActive 
                       ? "text-cream-bg" 
                       : isProtein
-                      ? "text-emerald-700 hover:text-emerald-950 font-extrabold"
+                      ? "text-[#C1272D] hover:text-red-950 font-extrabold"
                       : "text-forest-green hover:text-[#25684C]"
                   }`}
                 >
