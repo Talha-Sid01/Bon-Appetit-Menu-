@@ -161,12 +161,12 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
   };
 
   return (
-    <div className="sticky top-[73px] z-30 w-full bg-[#0F1912]/95 backdrop-blur-md border-b border-gold/10 py-3 shadow-md select-none">
+    <div className="sticky top-[73px] z-30 w-full bg-cream-bg/95 backdrop-blur-md border-b border-gold/15 py-3 shadow-sm select-none">
       <div className="relative max-w-7xl mx-auto px-4">
         
         {/* Left Gradient Fade Affordance */}
         <div
-          className={`absolute left-4 top-0 bottom-0 w-8 bg-gradient-to-r from-[#0F1912] to-transparent pointer-events-none z-20 transition-opacity duration-300 ${
+          className={`absolute left-4 top-0 bottom-0 w-8 bg-gradient-to-r from-cream-bg to-transparent pointer-events-none z-20 transition-opacity duration-300 ${
             showLeftFade ? "opacity-100" : "opacity-0"
           }`}
         />
@@ -184,18 +184,18 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
                 key={id}
                 data-id={id}
                 onClick={() => handleTabClick(id)}
-                className={`relative snap-start shrink-0 px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-all duration-300 select-none cursor-pointer focus:outline-none flex items-center justify-center border border-gold/15 overflow-hidden bg-[#1B2A20] active:scale-95`}
+                className={`relative snap-start shrink-0 px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-all duration-300 select-none cursor-pointer focus:outline-none flex items-center justify-center border border-gold/15 overflow-hidden bg-white active:scale-95`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeNavTab"
-                    className="absolute inset-0 bg-forest-green border border-[#D9B15C]/45 rounded-full shadow-[0_0_12px_rgba(27,67,50,0.6)]"
+                    className="absolute inset-0 bg-forest-green rounded-full shadow-[0_4px_12px_rgba(27,67,50,0.15)]"
                     transition={{ type: "spring", stiffness: 380, damping: 28 }}
                   />
                 )}
                 <span
                   className={`relative z-10 transition-colors duration-300 ${
-                    isActive ? "text-[#FAF6EE]" : "text-[#9BA89B] hover:text-[#FAF6EE]"
+                    isActive ? "text-cream-bg" : "text-forest-green hover:text-[#25684C]"
                   }`}
                 >
                   {getShortLabel(id)}
@@ -207,7 +207,7 @@ export default function StickyCategoryNav({ categoryIds }: StickyCategoryNavProp
 
         {/* Right Gradient Fade Affordance */}
         <div
-          className={`absolute right-4 top-0 bottom-0 w-8 bg-gradient-to-l from-[#0F1912] to-transparent pointer-events-none z-20 transition-opacity duration-300 ${
+          className={`absolute right-4 top-0 bottom-0 w-8 bg-gradient-to-l from-cream-bg to-transparent pointer-events-none z-20 transition-opacity duration-300 ${
             showRightFade ? "opacity-100" : "opacity-0"
           }`}
         />

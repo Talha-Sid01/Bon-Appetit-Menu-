@@ -272,7 +272,7 @@ export default function Home() {
         <StickyCategoryNav categoryIds={categoryIds} />
 
         {/* 5. Menu Sections */}
-        <main className="bg-[#0F1912] overflow-hidden">
+        <main className="bg-white overflow-hidden">
           {menuCategories.map((category, index) => (
             <CategorySection key={category.id} category={category} index={index} />
           ))}

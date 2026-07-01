@@ -131,7 +131,7 @@ const CategoryIcon = ({ name, className = "" }: { name: string; className?: stri
   }
 };
 
-export default function CategorySection({ category, index }: CategorySectionProps) {
+export default function CategorySection({ category }: CategorySectionProps) {
   const [activeFormat, setActiveFormat] = useState<"waffle" | "pancake" | "crepe">("waffle");
 
   const containerVariants = {
@@ -149,10 +149,6 @@ export default function CategorySection({ category, index }: CategorySectionProp
     show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 100, damping: 15 } },
   };
 
-  // Alternate backgrounds per section index
-  const isEven = index % 2 === 0;
-  const bgClass = isEven ? "bg-[#0F1912]" : "bg-[#141F17]";
-
   // Special renderer for Waffles, Pancakes, Crepes
   const renderWafflesPancakesCrepes = () => {
     if (!category.collections) return null;
@@ -164,15 +160,15 @@ export default function CategorySection({ category, index }: CategorySectionProp
       <div className="space-y-8">
         {/* Toggle Selector */}
         <div className="flex justify-center mb-6">
-          <div className="bg-[#1B2A20] p-1.5 rounded-full border border-gold/20 flex gap-1 shadow-inner z-10 relative">
+          <div className="bg-forest-green/5 p-1 rounded-full border border-gold/15 flex gap-1 shadow-inner z-10 relative">
             {(["waffle", "pancake", "crepe"] as const).map((format) => (
               <button
                 key={format}
                 onClick={() => setActiveFormat(format)}
                 className={`px-5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 select-none cursor-pointer ${
                   activeFormat === format
-                    ? "bg-forest-green text-cream-bg shadow border border-[#D9B15C]/25"
-                    : "text-[#9BA89B] hover:text-[#F3EDDD] hover:bg-white/5"
+                    ? "bg-forest-green text-cream-bg shadow border border-forest-green"
+                    : "text-forest-green hover:bg-forest-green/10"
                 }`}
               >
                 {format}s
@@ -208,7 +204,7 @@ export default function CategorySection({ category, index }: CategorySectionProp
 
             return (
               <motion.div key={col.name} variants={itemVariants}>
-                <MenuItemCard item={dynamicItem} />
+                <MenuItemCard item={dynamicItem} iconName={category.iconName} />
               </motion.div>
             );
           })}
@@ -216,17 +212,17 @@ export default function CategorySection({ category, index }: CategorySectionProp
 
         {/* Signature Collection Row (Highlighted Tier) */}
         {signatureCollection && (
-          <div className="mt-8 border border-[#D9B15C]/25 bg-red-950/20 p-6 md:p-8 rounded-2xl relative overflow-hidden shadow-lg">
-            <div className="absolute top-0 right-0 bg-[#C1272D] text-[#FAF6EE] text-[10px] uppercase tracking-widest font-extrabold px-4 py-1.5 rounded-bl-xl shadow flex items-center border-l border-b border-[#D9B15C]/35">
-              <Sparkles className="w-3 h-3 mr-1 fill-current text-[#D9B15C]" />
+          <div className="mt-8 border border-italian-red/20 bg-italian-red/5 p-6 md:p-8 rounded-2xl relative overflow-hidden shadow">
+            <div className="absolute top-0 right-0 bg-italian-red text-white text-[10px] uppercase tracking-widest font-extrabold px-4 py-1.5 rounded-bl-xl shadow flex items-center">
+              <Sparkles className="w-3 h-3 mr-1 fill-current" />
               Signature Tier
             </div>
             
             <div className="text-center md:text-left mb-6">
-              <h4 className="font-display text-xl font-extrabold text-[#F3EDDD] tracking-wide">
+              <h4 className="font-display text-xl font-extrabold text-forest-green tracking-wide">
                 {signatureCollection.name}
               </h4>
-              <p className="text-xs md:text-sm text-[#9BA89B] mt-1">
+              <p className="text-xs md:text-sm text-ink/70 mt-1">
                 The ultimate dessert experience — meticulously prepared with premium ingredients.
               </p>
             </div>
@@ -239,12 +235,12 @@ export default function CategorySection({ category, index }: CategorySectionProp
               ].map((sigItem) => (
                 <div
                   key={sigItem.name}
-                  className="bg-[#1B2A20] rounded-xl p-4 shadow-sm border border-gold/25 flex items-center justify-between hover:border-[#D9B15C]/60 transition-all duration-300"
+                  className="bg-white rounded-xl p-4 shadow-sm border border-gold/10 flex items-center justify-between hover:border-forest-green/40 transition-all duration-300"
                 >
-                  <span className="font-display text-sm font-bold text-[#F3EDDD]">
+                  <span className="font-display text-sm font-bold text-forest-green">
                     {sigItem.name}
                   </span>
-                  <span className="font-sans text-sm font-extrabold text-[#D9B15C]">
+                  <span className="font-sans text-sm font-extrabold text-italian-red">
                     ₹{sigItem.price}
                   </span>
                 </div>
@@ -257,23 +253,23 @@ export default function CategorySection({ category, index }: CategorySectionProp
   };
 
   return (
-    <section id={category.id} className={`py-16 scroll-mt-28 border-b border-gold/10 last:border-0 transition-colors duration-300 ${bgClass}`}>
+    <section id={category.id} className="py-12 border-b border-gold/15 last:border-0 scroll-mt-28">
       {/* Category Heading */}
       <div className="flex flex-col items-center mb-10 text-center px-4">
-        <div className="p-3 bg-[#1B2A20] rounded-full border border-gold/30 shadow-lg mb-3 flex items-center justify-center">
+        <div className="p-3 bg-white rounded-full border border-gold/20 shadow-md mb-3 flex items-center justify-center">
           <CategoryIcon name={category.iconName} className="text-gold" />
         </div>
         
         <div className="flex items-center justify-center gap-3 w-full max-w-lg">
           <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-gold" />
-          <h3 className="font-display text-xl md:text-2xl font-black text-[#F3EDDD] tracking-widest uppercase">
+          <h3 className="font-display text-xl md:text-2xl font-black text-forest-green tracking-widest uppercase">
             {category.title}
           </h3>
           <div className="h-[1px] flex-grow bg-gradient-to-l from-transparent to-gold" />
         </div>
 
         {category.description && (
-          <p className="mt-2 text-xs md:text-sm font-bold tracking-wider text-red-400 font-sans">
+          <p className="mt-2 text-xs md:text-sm font-semibold tracking-wider text-italian-red font-sans">
             {category.description}
           </p>
         )}
@@ -293,7 +289,7 @@ export default function CategorySection({ category, index }: CategorySectionProp
           >
             {category.items.map((item) => (
               <motion.div key={item.name} variants={itemVariants}>
-                <MenuItemCard item={item} />
+                <MenuItemCard item={item} iconName={category.iconName} />
               </motion.div>
             ))}
           </motion.div>
@@ -301,13 +297,13 @@ export default function CategorySection({ category, index }: CategorySectionProp
 
         {/* Small inline note for specific sections */}
         {category.id === "protein-shakes" && (
-          <p className="mt-6 text-center text-xs text-[#9BA89B] font-semibold italic">
+          <p className="mt-6 text-center text-xs text-ink/60 font-semibold italic">
             *We only use milk.
           </p>
         )}
         
         {category.id === "performance-addons" && (
-          <p className="mt-8 text-center text-xs text-[#9BA89B]/85 font-sans tracking-wide">
+          <p className="mt-8 text-center text-xs text-ink/50 font-sans tracking-wide">
             Protein values are approximate and may vary slightly based on serving size and ingredient availability.
           </p>
         )}
