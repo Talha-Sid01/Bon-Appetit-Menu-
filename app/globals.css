@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest-green: #1B4332;
+  --color-italian-red: #C1272D;
+  --color-gold: #C89B3C;
+  --color-cream-bg: #FAF6EE;
+  --color-ink: #22261F;
+  --color-white: #ffffff;
+  
+  --font-display: var(--font-fraunces), serif;
+  --font-sans: var(--font-inter), sans-serif;
+}
+
+/* Custom scroll snap for category navigation */
+.snap-x-mandatory {
+  scroll-snap-type: x mandatory;
+}
+.snap-start {
+  scroll-snap-align: start;
+}
+
+/* Custom styles to hide scrollbars for horizontal nav */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Enforce branding background and typography globally */
+:root {
+  --background: #FAF6EE;
+  --foreground: #22261F;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Preloader custom rotating ring animations */
+@keyframes draw-ring {
+  0% {
+    stroke-dashoffset: 283;
+    transform: rotate(0deg);
+  }
+  50% {
+    stroke-dashoffset: 0;
+    transform: rotate(180deg);
+  }
+  100% {
+    stroke-dashoffset: 283;
+    transform: rotate(360deg);
+  }
+}
+
+.animate-draw-ring {
+  stroke-dasharray: 283;
+  animation: draw-ring 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transform-origin: center;
+}
+
+/* Preloader tricolor rotating gradient border */
+@keyframes spin-gradient {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-gradient {
+  animation: spin-gradient 3s linear infinite;
+}
+
+/* Subtle pattern overlay for premium feel */
+.bg-cream-pattern {
+  background-color: #FAF6EE;
+  background-image: 
+    radial-gradient(#C89B3C 0.5px, transparent 0.5px), 
+    radial-gradient(#C89B3C 0.5px, #FAF6EE 0.5px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  background-opacity: 0.05;
+}
+
+/* Responsive tweaks for safe areas (iOS) */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.bottom-safe {
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+}
