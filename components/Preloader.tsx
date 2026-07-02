@@ -170,16 +170,55 @@ export default function Preloader({ onComplete }: PreloaderProps) {
               />
             </svg>
 
+            {/* Ripple Gold Ring Behind the Logo Card */}
+            {!shouldReduceMotion && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{
+                  opacity: [0, 0.4, 0],
+                  scale: [1, 1.25, 1.45],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2.5,
+                  ease: "easeOut",
+                  delay: 1.4,
+                }}
+                className="absolute w-48 h-48 md:w-60 md:h-60 rounded-full border border-gold/45 pointer-events-none shadow-[0_0_20px_rgba(200,155,60,0.3)] bg-gradient-to-tr from-gold/5 via-gold/15 to-transparent flex items-center justify-center -z-10"
+              />
+            )}
+
             {/* Inner Logo Image (Springs in during Stage 2) */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{
+                opacity: 0,
+                scale: 0.7,
+                boxShadow: "0 0 15px rgba(200,155,60,0.2)"
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                boxShadow: [
+                  "0 0 15px rgba(200,155,60,0.25)",
+                  "0 0 50px rgba(200,155,60,0.85)",
+                  "0 0 15px rgba(200,155,60,0.25)"
+                ]
+              }}
               transition={
                 shouldReduceMotion
                   ? { duration: 0.4, delay: 0.5 }
-                  : { type: "spring", damping: 12, stiffness: 75, delay: 0.9 }
+                  : {
+                      scale: { type: "spring", damping: 12, stiffness: 75, delay: 0.9 },
+                      opacity: { duration: 0.4, delay: 0.9 },
+                      boxShadow: {
+                        repeat: Infinity,
+                        duration: 2.5,
+                        ease: "easeInOut" as const,
+                        delay: 1.4
+                      }
+                    }
               }
-              className="relative w-48 h-48 md:w-60 md:h-60 rounded-full overflow-hidden bg-white shadow-[0_0_35px_rgba(200,155,60,0.45)] flex items-center justify-center p-4 border border-gold/35"
+              className="relative w-48 h-48 md:w-60 md:h-60 rounded-full overflow-hidden bg-white flex items-center justify-center p-4 border border-gold/35 z-10"
             >
               {/* Image content */}
               <Image

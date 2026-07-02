@@ -27,8 +27,8 @@ export default function Home() {
   // Address and Map settings
   const phoneNo = "+919892350065";
   const addressText = "Shop No. 12, Vasant Nagar, Opp Evershine Mall, Chincholi Bunder, Malad (W), Mumbai - 400064";
-  const mapEmbedUrl = "https://maps.google.com/maps?q=Shop%20No.%2012,%20Vasant%20Nagar,%20Opp%20Evershine%20Mall,%20Chincholi%20Bunder,%20Malad%20(W),%20Mumbai%20-%20400064&output=embed";
-  const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressText)}`;
+  const mapEmbedUrl = "https://maps.google.com/maps?q=19.1791318,72.836882&z=17&output=embed";
+  const directionsUrl = "https://share.google/4jHYhBfDkLeGrAKVE";
 
   // Header scroll class adjustments
   useEffect(() => {

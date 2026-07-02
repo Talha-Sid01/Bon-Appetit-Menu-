@@ -395,7 +395,7 @@ export const menuCategories: MenuCategory[] = [
 export const trustBadges = [
   { label: 'High Protein', icon: 'dumbbell' },
   { label: 'Fresh Ingredients', icon: 'leaf' },
-  { label: 'No Artificial Preservatives', icon: 'white-shield' },
+  { label: 'No Artificial Preservatives', icon: 'shield-check' },
   { label: 'Gym Friendly', icon: 'apple' },
   { label: 'Muscle Recovery', icon: 'activity' },
   { label: 'Made Fresh Daily', icon: 'clock' },
