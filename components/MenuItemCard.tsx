@@ -155,77 +155,79 @@ export default function MenuItemCard({ item, iconName }: MenuItemCardProps) {
   const isCustomShake = item.name === "Custom Protein Shake";
 
   return (
-    <div className="relative group bg-forest-green rounded-2xl p-5 shadow-md hover:shadow-[0_4px_20px_rgba(27,67,50,0.25)] hover:-translate-y-1 transition-all duration-300 border border-gold/25 hover:border-gold/60 flex flex-col justify-between overflow-hidden h-full">
+    <div className="relative group bg-forest-green rounded-2xl px-4 py-3.5 md:p-5 shadow-md hover:shadow-[0_4px_20px_rgba(27,67,50,0.25)] hover:-translate-y-1 transition-all duration-300 border border-gold/25 hover:border-gold/60 flex flex-col justify-between overflow-hidden h-full">
       
       {/* Decorative background accent on hover */}
       <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-bl-full transition-all duration-500 group-hover:scale-150 -z-0 pointer-events-none" />
 
-      {/* Top Section: Badges & Tags */}
-      <div className="flex flex-wrap items-center justify-between gap-2 mb-4 z-10 relative">
-        {/* Protein Tag */}
-        {item.protein ? (
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-white/10 border border-white/15 text-[#FAF6EE] shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse" />
-            {item.protein.includes("PROTEIN") ? item.protein : `${item.protein} PROTEIN`}
-          </span>
-        ) : (
-          <div /> // Spacing spacer
-        )}
+      {/* Top Section: Badges & Tags (Render only if present to save height) */}
+      {(item.protein || item.tag) && (
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-2 md:mb-4 z-10 relative">
+          {/* Protein Tag */}
+          {item.protein ? (
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold tracking-wider uppercase bg-white/10 border border-white/15 text-[#FAF6EE] shadow-sm">
+              <span className="w-1 h-1 rounded-full bg-emerald-400 mr-1 animate-pulse" />
+              {item.protein.includes("PROTEIN") ? item.protein : `${item.protein} PROTEIN`}
+            </span>
+          ) : (
+            <div /> // Spacing spacer
+          )}
 
-        {/* Brand Ribbon Badge */}
-        {item.tag && (
-          <motion.span
-            animate={
-              ["best seller", "most ordered"].includes(item.tag.toLowerCase())
-                ? {
-                    scale: [1, 1.03, 1],
-                    boxShadow: [
-                      "0 0 4px rgba(255,255,255,0.05)",
-                      "0 0 10px rgba(255,255,255,0.25)",
-                      "0 0 4px rgba(255,255,255,0.05)",
-                    ],
-                  }
-                : {}
-            }
-            transition={{
-              repeat: Infinity,
-              duration: 3.2,
-              ease: "easeInOut",
-            }}
-            className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-sm ${getBadgeConfig(item.tag).bg}`}
-          >
-            {getBadgeConfig(item.tag).icon}
-            {getBadgeConfig(item.tag).label}
-          </motion.span>
-        )}
-      </div>
+          {/* Brand Ribbon Badge */}
+          {item.tag && (
+            <motion.span
+              animate={
+                ["best seller", "most ordered"].includes(item.tag.toLowerCase())
+                  ? {
+                      scale: [1, 1.03, 1],
+                      boxShadow: [
+                        "0 0 4px rgba(255,255,255,0.05)",
+                        "0 0 10px rgba(255,255,255,0.25)",
+                        "0 0 4px rgba(255,255,255,0.05)",
+                      ],
+                    }
+                  : {}
+              }
+              transition={{
+                repeat: Infinity,
+                duration: 3.2,
+                ease: "easeInOut",
+              }}
+              className={`inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-widest shadow-sm ${getBadgeConfig(item.tag).bg}`}
+            >
+              {getBadgeConfig(item.tag).icon}
+              {getBadgeConfig(item.tag).label}
+            </motion.span>
+          )}
+        </div>
+      )}
 
       {/* Middle Section: Icon, Title, Leader, Price */}
-      <div className="z-10 relative mb-2 flex-grow">
+      <div className="z-10 relative mb-1 md:mb-2 flex-grow">
         <div className="flex items-baseline justify-between gap-1 w-full">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <ItemIcon name={iconName} />
-            <h4 className="font-display text-base md:text-lg font-bold text-white tracking-wide group-hover:text-[#D9B15C] transition-colors duration-300">
+            <h4 className="font-display text-sm md:text-lg font-bold text-white tracking-wide group-hover:text-[#D9B15C] transition-colors duration-300">
               {item.name}
             </h4>
           </div>
-          <span className="flex-grow border-b border-dotted border-white/20 mx-2 mb-1 group-hover:border-gold/50 transition-colors duration-300" />
-          <span className="font-sans text-base md:text-lg font-bold text-[#D9B15C] shrink-0">
+          <span className="flex-grow border-b border-dotted border-white/20 mx-1.5 mb-1 group-hover:border-gold/50 transition-colors duration-300" />
+          <span className="font-sans text-sm md:text-lg font-bold text-[#D9B15C] shrink-0">
             ₹{item.price}
-            {isCustomShake && <span className="text-[10px] md:text-xs font-semibold text-white/75 ml-0.5"> onwards</span>}
+            {isCustomShake && <span className="text-[9px] md:text-xs font-semibold text-white/75 ml-0.5"> onwards</span>}
           </span>
         </div>
 
         {/* Description */}
         {item.description && (
-          <p className="mt-2.5 text-xs md:text-sm text-white/90 leading-relaxed italic font-sans pr-2">
+          <p className="mt-1.5 md:mt-2.5 text-[11px] md:text-sm text-white/85 leading-relaxed italic font-sans pr-2">
             {item.description}
           </p>
         )}
       </div>
 
       {/* Accent Line on Card Bottom */}
-      <div className="w-12 h-0.5 bg-white/20 group-hover:w-full transition-all duration-500 ease-out mt-4 z-10" />
+      <div className="w-12 h-0.5 bg-white/20 group-hover:w-full transition-all duration-500 ease-out mt-1.5 md:mt-4 z-10" />
     </div>
   );
 }

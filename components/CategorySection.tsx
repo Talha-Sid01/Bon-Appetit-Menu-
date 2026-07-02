@@ -183,7 +183,7 @@ export default function CategorySection({ category }: CategorySectionProps) {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6"
         >
           {standardCollections.map((col) => {
             const price =
@@ -253,9 +253,9 @@ export default function CategorySection({ category }: CategorySectionProps) {
   };
 
   return (
-    <section id={category.id} className="py-12 border-b border-gold/15 last:border-0 scroll-mt-28">
+    <section id={category.id} className="py-6 md:py-12 border-b border-gold/15 last:border-0 scroll-mt-28">
       {/* Category Heading */}
-      <div className="flex flex-col items-center mb-10 text-center px-4">
+      <div className="flex flex-col items-center mb-6 md:mb-10 text-center px-4">
         <div className="p-3 bg-white rounded-full border border-gold/20 shadow-md mb-3 flex items-center justify-center">
           <CategoryIcon name={category.iconName} className="text-gold" />
         </div>
@@ -285,7 +285,7 @@ export default function CategorySection({ category }: CategorySectionProps) {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6"
           >
             {category.items.map((item) => (
               <motion.div key={item.name} variants={itemVariants}>
